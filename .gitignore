@@ -74,5 +74,4 @@ dmypy.json
 *.log
 
 # Project-specific
-docs/diagrams/*.png
 *.DS_Store
