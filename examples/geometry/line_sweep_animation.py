@@ -1,8 +1,8 @@
 # line_sweep_animation.py
 """
-Line Sweep Animation Demo
+Improved Line Sweep Animation Demo
 
-Visualizes the line sweep algorithm for segment intersections using matplotlib's animation.
+Intersections appear exactly when the sweep line crosses their x-coordinate.
 """
 
 import matplotlib.pyplot as plt
@@ -17,68 +17,8 @@ segments = [
     ((0, 3), (5, 3))
 ]
 
-# Precompute all intersection events
-events = []
-for i, (p, q) in enumerate(segments):
-    if p[0] > q[0]:
-        p, q = q, p
-    events.append((p[0], 'start', i))
-    events.append((q[0], 'end', i))
-events.sort()
-
-# Store intersections as the sweep progresses
-intersections = []
-active = []
-
-# Set up the plot
-fig, ax = plt.subplots()
-ax.set_xlim(0, 6)
-ax.set_ylim(0, 6)
-ax.set_title("Line Sweep Animation")
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-
-# Draw all segments
-for (x1, y1), (x2, y2) in segments:
-    ax.plot([x1, x2], [y1, y2], color='gray', linestyle='--')
-
-# Sweep line (vertical)
-sweep_line = ax.axvline(x=0, color='blue', linewidth=1.5, label='Sweep Line')
-
-# Intersection points
-intersection_dots, = ax.plot([], [], 'ro', markersize=5, label='Intersections')
-
-def update(frame):
-    global active, intersections  # MUST be at top before use
-
-    if frame >= len(events):
-        return sweep_line, intersection_dots
-
-    x, etype, idx = events[frame]
-    sweep_line.set_xdata([x, x])  # Move sweep line
-
-    if etype == 'start':
-        for aidx in active:
-            if do_intersect(*segments[aidx], *segments[idx]):
-                point = get_intersection_point(segments[aidx], segments[idx])
-                if point and point[0] <= x:
-                    intersections.append(point)
-        active.append(idx)
-    elif etype == 'end':
-        if idx in active:
-            active.remove(idx)
-
-    if intersections:
-        xs, ys = zip(*intersections)
-        intersection_dots.set_data(xs, ys)
-    else:
-        intersection_dots.set_data([], [])
-
-    return sweep_line, intersection_dots
-
-
+# Precompute all intersection points
 def get_intersection_point(seg1, seg2):
-    # Simple line intersection formula
     (x1, y1), (x2, y2) = seg1
     (x3, y3), (x4, y4) = seg2
 
@@ -96,7 +36,51 @@ def get_intersection_point(seg1, seg2):
     y = det(d, ydiff) / div
     return (x, y)
 
-ani = animation.FuncAnimation(fig, update, frames=len(events)+5, interval=1000, blit=False, repeat=False)
+# Gather all intersections
+intersections_all = []
+for i in range(len(segments)):
+    for j in range(i+1, len(segments)):
+        if do_intersect(*segments[i], *segments[j]):
+            point = get_intersection_point(segments[i], segments[j])
+            if point:
+                intersections_all.append(point)
+
+# Sort intersections by x-coordinate
+intersections_all.sort(key=lambda p: p[0])
+
+# Setup plot
+fig, ax = plt.subplots()
+ax.set_xlim(0, 6)
+ax.set_ylim(0, 6)
+ax.set_title("Line Sweep Animation (Improved)")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+
+# Draw all segments
+for (x1, y1), (x2, y2) in segments:
+    ax.plot([x1, x2], [y1, y2], color='gray', linestyle='--')
+
+# Sweep line (vertical)
+sweep_line = ax.axvline(x=0, color='blue', linewidth=1.5, label='Sweep Line')
+
+# Intersection points
+intersection_dots, = ax.plot([], [], 'ro', markersize=5, label='Intersections')
+
+def update(frame):
+    x_pos = frame / 10.0  # Move sweep line from 0 to ~6
+    sweep_line.set_xdata([x_pos, x_pos])
+
+    # Show intersections up to current sweep line x
+    visible_points = [p for p in intersections_all if p[0] <= x_pos]
+    if visible_points:
+        xs, ys = zip(*visible_points)
+        intersection_dots.set_data(xs, ys)
+    else:
+        intersection_dots.set_data([], [])
+
+    return sweep_line, intersection_dots
+
+ani = animation.FuncAnimation(fig, update, frames=int(6*10)+1, interval=200, blit=False, repeat=False)
 
 plt.legend()
 plt.grid(True)
