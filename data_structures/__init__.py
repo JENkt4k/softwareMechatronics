@@ -10,3 +10,4 @@ from .hash_table import HashTable
 from .tree import BinaryTree, TreeNode
 from .graph import Graph
 from .union_find import UnionFind
+from .avl_tree import AVLTree
