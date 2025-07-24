@@ -11,3 +11,5 @@ from .tree import BinaryTree, TreeNode
 from .graph import Graph
 from .union_find import UnionFind
 from .avl_tree import AVLTree
+from .array_binary_tree import ArrayBinaryTree
+
