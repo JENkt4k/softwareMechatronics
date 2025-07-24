@@ -49,7 +49,8 @@ sweep_line = ax.axvline(x=0, color='blue', linewidth=1.5, label='Sweep Line')
 intersection_dots, = ax.plot([], [], 'ro', markersize=5, label='Intersections')
 
 def update(frame):
-    global active, intersections
+    global active, intersections  # MUST be at top before use
+
     if frame >= len(events):
         return sweep_line, intersection_dots
 
@@ -60,14 +61,13 @@ def update(frame):
         for aidx in active:
             if do_intersect(*segments[aidx], *segments[idx]):
                 point = get_intersection_point(segments[aidx], segments[idx])
-                if point:
+                if point and point[0] <= x:
                     intersections.append(point)
         active.append(idx)
     elif etype == 'end':
         if idx in active:
             active.remove(idx)
 
-    # Update intersection dots
     if intersections:
         xs, ys = zip(*intersections)
         intersection_dots.set_data(xs, ys)
