@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "SoftwareMechatronics"
+version = "0.1.0"
+description = "Core data structures, algorithms, and computation models."
+authors = [
+  { name="James Nelson", email="you@example.com" }
+]
+dependencies = []
+requires-python = ">=3.8"

@@ -1,0 +1,47 @@
+digraph AlgorithmsToDS {
+    rankdir=LR;
+    node [shape=box, style=filled, color=lightblue];
+
+    subgraph cluster_data_structures {
+        label = "Data Structures";
+        style=filled;
+        color=lightgrey;
+        Array; Queue; Stack; Graph; "Priority Queue"; "Union-Find"; "2D Array";
+        Bitmask;
+    }
+
+    subgraph cluster_algorithms {
+        label = "Algorithms";
+        style=filled;
+        color=white;
+        "Binary Search"; "Merge Sort"; "Quick Sort"; BFS; DFS; Dijkstra; "Prim";
+        "Kruskal"; "Bellman-Ford"; "Topological Sort"; Knapsack; "Edit Distance";
+        LIS; "N-Queens"; Sudoku; "TSP (Held-Karp)";
+    }
+
+    "Binary Search" -> Array;
+    "Merge Sort" -> Array;
+    "Quick Sort" -> Array;
+    BFS -> Graph;
+    BFS -> Queue;
+    DFS -> Graph;
+    DFS -> Stack;
+    Dijkstra -> Graph;
+    Dijkstra -> "Priority Queue";
+    Prim -> Graph;
+    Prim -> "Priority Queue";
+    Kruskal -> Graph;
+    Kruskal -> "Union-Find";
+    "Bellman-Ford" -> Graph;
+    "Bellman-Ford" -> Array;
+    "Topological Sort" -> Graph;
+    "Topological Sort" -> Stack;
+    Knapsack -> Array;
+    "Edit Distance" -> "2D Array";
+    LIS -> Array;
+    LIS -> "Binary Search";
+    "N-Queens" -> Array;
+    Sudoku -> "2D Array";
+    "TSP (Held-Karp)" -> "2D Array";
+    "TSP (Held-Karp)" -> Bitmask;
+}
