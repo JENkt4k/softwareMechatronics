@@ -81,6 +81,19 @@ print(dijkstra(graph, 'A'))
 
 ---
 
+## Visual Demos
+
+We have added visual demos for **ArrayBinaryTree** and **BinaryHeap**.
+
+### ArrayBinaryTree Visualization
+![ArrayBinaryTree](docs/diagrams/array_tree.png)
+
+### BinaryHeap Visualization
+![BinaryHeap](docs/diagrams/heap.png)
+
+
+---
+
 ## **Testing**
 
 Run all unit tests:
