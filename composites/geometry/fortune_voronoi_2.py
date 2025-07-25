@@ -7,8 +7,8 @@ Currently handles:
 """
 
 import heapq
-from composites.geometry.beachline import BeachLine
-
+from beachline import BeachLine
+# from beachline import BeachLine
 
 class Event:
     def __init__(self, y, point, site_event=True):
