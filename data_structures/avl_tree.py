@@ -85,8 +85,20 @@ class AVLTree:
         return node
 
     def search(self, key):
-        return self._search(self.root, key)
+        """
+        Search for a key in the AVL tree and return its value.
+        """
+        node = self._search_node(self.root, key)
+        return node.value if node else None
 
+    def _search_node(self, node, key):
+        if node is None or node.key == key:
+            return node
+        if key < node.key:
+            return self._search_node(node.left, key)
+        else:
+            return self._search_node(node.right, key)
+    
     def _search(self, node, key):
         if node is None or node.key == key:
             return node
@@ -135,6 +147,17 @@ class AVLTree:
         while current.left:
             current = current.left
         return current
+    
+    def inorder_values(self):
+        result = []
+        def _inorder(node):
+            if node:
+                _inorder(node.left)
+                result.append(node.value)
+                _inorder(node.right)
+        _inorder(self.root)
+        return result
+
 
 
 if __name__ == "__main__":
