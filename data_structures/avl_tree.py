@@ -86,7 +86,7 @@ class AVLTree:
 
     def search(self, key):
         """
-        Search for a key in the AVL tree and return its value.
+        Search for a key in the AVL tree and return its value, or None if not found.
         """
         node = self._search_node(self.root, key)
         return node.value if node else None
