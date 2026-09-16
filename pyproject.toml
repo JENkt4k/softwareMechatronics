@@ -7,6 +7,7 @@ name = "SoftwareMechatronics"
 version = "0.1.0"
 description = "Core data structures, algorithms, and computation models."
 readme = "README.md"
+license = {file = "LICENSE"}
 authors = [
   { name="James Nelson" }
 ]

@@ -1,6 +1,6 @@
 # fortune_voronoi_demo.py
 """
-Voronoi Diagram Demo using Fortune's Algorithm (Simplified).
+Bounded Voronoi diagram using Fortune's event sweep.
 """
 
 import matplotlib.pyplot as plt
@@ -22,7 +22,7 @@ def main():
         elif start:
             plt.plot(start[0], start[1], 'ro')
 
-    plt.title("Experimental Fortune sketch (edges not implemented)")
+    plt.title("Bounded Voronoi diagram (Fortune sweep)")
     plt.legend()
     plt.axis('equal')
     plt.show()

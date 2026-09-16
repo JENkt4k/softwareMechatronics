@@ -1,4 +1,4 @@
-"""Compatibility imports for the experimental Fortune sketch.
+"""Compatibility imports for the Fortune sweep.
 
 Use composites.geometry.fortune_voronoi for the canonical implementation.
 """

@@ -7,7 +7,7 @@ This module computes a Voronoi diagram by brute force:
 - Assign a region color based on nearest site.
 
 This is not efficient (O(n * width * height)) but is useful for visualization
-and verifying Fortune's algorithm results later.
+and comparing against Fortune-sweep results.
 """
 
 import numpy as np

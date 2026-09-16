@@ -21,7 +21,7 @@ def main():
     fig, axs = plt.subplots(1, 2, figsize=(12, 6))
     
     # Plot our implementation
-    axs[0].set_title("Experimental Fortune sketch (no edges)")
+    axs[0].set_title("Bounded Fortune sweep")
     px, py = zip(*points)
     axs[0].scatter(px, py, c='black', marker='o', label='Sites')
     for start, end in edges:
