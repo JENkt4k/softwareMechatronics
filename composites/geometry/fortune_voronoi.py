@@ -1,12 +1,16 @@
 # fortune_voronoi.py
 """
-AVL-based Fortune's Algorithm (skeleton).
+EXPERIMENTAL: incomplete AVL-based Fortune's algorithm.
+
+This sketch does not compute a Voronoi diagram: edges remain empty.
+Circle events, exact breakpoints, and bounding-box clipping are unfinished.
 Currently handles:
 - Site events.
 - BeachLine management with AVL tree.
 """
 
 import heapq
+import warnings
 from composites.geometry.beachline import BeachLine
 
 
@@ -26,6 +30,11 @@ class Event:
 
 class FortuneVoronoi:
     def __init__(self, points, bbox=(0, 0, 500, 500)):
+        warnings.warn(
+            "FortuneVoronoi is experimental and incomplete; no Voronoi edges are generated.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
         self.points = sorted(points, key=lambda p: -p[1])  # Sort by y descending
         self.bbox = bbox
         self.events = []
@@ -58,8 +67,9 @@ class FortuneVoronoi:
         # TODO: Clip edges to bounding box
         return self.edges
 
-def fortune_voronoi(points):
-    algo = FortuneVoronoi(points)
+def fortune_voronoi(points, bbox=(0, 0, 500, 500)):
+    """Run the experimental sketch; bbox is (xmin, ymin, xmax, ymax)."""
+    algo = FortuneVoronoi(points, bbox=bbox)
     return algo.compute()
 
 if __name__ == "__main__":

@@ -1,36 +1,38 @@
-# Audit Report: SoftwareMechatronics
+# Project status audit
 
-This report provides an overview of the algorithms and data structures currently implemented in the SoftwareMechatronics package, and highlights missing or potential additions.
+Updated September 16, 2026. This is an implementation inventory, not a claim of exhaustive correctness or test coverage.
 
----
+| Area | Current status |
+| --- | --- |
+| Search and sorting | Binary search, BFS, DFS, merge sort, quick sort implemented |
+| Graph algorithms | Dijkstra, Bellman-Ford, Prim, Kruskal, A*, Floyd-Warshall, Edmonds-Karp, topological sort implemented |
+| Dynamic programming | Knapsack, edit distance, LIS implemented; Held-Karp TSP in examples |
+| Backtracking | N-Queens and Sudoku implemented |
+| Strings and optimization | KMP and simulated-annealing TSP implemented |
+| Data structures | Arrays, linked lists, stacks, queues, hash tables, trees, AVL trees, graphs, union-find, and composite heap implemented |
+| Computation models | FSM, PDA, Turing machine, lambda calculus, SKI implemented; PDA and lambda correctness gaps remain |
+| Geometry | Brute-force raster Voronoi implemented; line sweep has endpoint limitations; Fortune implementation is experimental and unfinished |
 
-## **Coverage Table**
+## Cleanup scope
 
-| **Category**        | **Implemented**                             | **Missing / Potential Additions**           |
-|---------------------|---------------------------------------------|---------------------------------------------|
-| **Search**          | Binary Search, BFS, DFS                     | A* (heuristic shortest path), Jump Search   |
-| **Sorting**         | Merge Sort, Quick Sort                      | Heap Sort, Counting Sort, Parallel MergeSort|
-| **Graph**           | Dijkstra, Bellman-Ford, Kruskal, Prim        | Floyd-Warshall, A*, Max Flow (Edmonds-Karp) |
-| **Dynamic Programming (DP)** | Knapsack, Edit Distance, LIS       | Matrix Chain Multiplication, Coin Change, Subset Sum |
-| **Backtracking**    | N-Queens, Sudoku Solver                     | Crossword Solver, Word Search Solver        |
-| **Data Structures** | Array, Linked List, Stack, Queue, HashTable, Tree, Union-Find | Segment Tree, Fenwick Tree (BIT), LRU Cache, Monotonic Queue |
-| **String Algorithms** | -                                         | KMP (Knuth-Morris-Pratt), Rabin-Karp, Trie-based Prefix Search |
-| **Numeric Algorithms** | -                                        | Fast Fourier Transform (FFT), GCD (Euclid), Extended GCD |
-| **Parallel Variants** | -                                         | Parallel Sorting (e.g., Parallel MergeSort), GPU BFS/DFS |
+- Consolidate maintained tests under `tests/` so the documented discovery command includes them.
+- Correct Floyd-Warshall's reverse shortest-path expectation (10, via D-C-B-A).
+- Align AVL tests with `search(key)` returning the stored value, not a node.
+- Correct the line-sweep test import and compare unordered segment pairs.
+- Declare explicit package discovery and optional visual/reference dependencies.
+- Include string, optimization, and geometry-example packages in distributions; exclude tests.
+- Use a single Fortune sketch, label its demos experimental, and support the documented bounding-box argument.
 
----
+## Remaining work
 
-## **Notes**
-- Current implementations are correct for standard test cases but performance benchmarks show gaps compared to C-backed libraries like `scipy` and `bisect`.
-- Advanced string algorithms (KMP, Rabin-Karp) are not present but would enhance coverage.
-- GPU/parallel computation (CUDA, OpenCL) is not yet explored.
-- FFT and number-theoretic algorithms are missing and would be beneficial for scientific computing use-cases.
+1. Fix PDA stack/acceptance and epsilon-transition behavior, capture-avoiding lambda substitution, and line-sweep endpoint handling, with regression tests.
+2. Expand coverage of currently untested algorithms and edge cases.
+3. Complete Fortune circle events, exact breakpoints, edge construction, and clipping before claiming Voronoi support from that implementation.
+4. Validate across supported Python versions and add CI.
+5. Resolve licensing: the previous README claimed MIT, but no license file is present.
 
----
+Potential additions such as segment trees, FFT, or parallel algorithms are future ideas, not requirements for the current release. Historical benchmark results are not release-validation evidence.
 
-## **Recommendations**
-1. **Add missing algorithms** to improve coverage for real-world applications (e.g., A*, Floyd-Warshall for routing problems).
-2. **Introduce advanced data structures** like Segment Trees, Fenwick Trees, and LRU caches.
-3. **Explore performance optimizations** using Numba, PyBind11 (C++), or Rust bindings.
-4. **Add parallel and GPU-based implementations** for heavy tasks (e.g., sorting, graph traversal).
+## Cleanup validation
 
+On Python 3.9, all 42 tests passed both from the checkout and against an isolated wheel installation. The wheel built successfully, includes string/optimization/geometry-example packages and optional-dependency metadata, and excludes tests. Six installed console examples ran successfully: Dijkstra/Bellman-Ford, Held-Karp, heap, KMP, A*, and max flow. GUI demos and other Python versions were not validated.

@@ -22,7 +22,7 @@ def main():
         elif start:
             plt.plot(start[0], start[1], 'ro')
 
-    plt.title("Voronoi Diagram (Fortune's Algorithm)")
+    plt.title("Experimental Fortune sketch (edges not implemented)")
     plt.legend()
     plt.axis('equal')
     plt.show()

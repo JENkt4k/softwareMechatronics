@@ -16,12 +16,12 @@ def main():
     points = [(100, 100), (300, 100), (200, 300), (400, 400), (100, 400)]
     
     # Our Fortune's algorithm edges
-    edges = fortune_voronoi(points, bbox=(0, 500, 0, 500))
+    edges = fortune_voronoi(points, bbox=(0, 0, 500, 500))
     
     fig, axs = plt.subplots(1, 2, figsize=(12, 6))
     
     # Plot our implementation
-    axs[0].set_title("Fortune's Algorithm (Our Implementation)")
+    axs[0].set_title("Experimental Fortune sketch (no edges)")
     px, py = zip(*points)
     axs[0].scatter(px, py, c='black', marker='o', label='Sites')
     for start, end in edges:

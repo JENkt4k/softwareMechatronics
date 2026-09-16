@@ -45,7 +45,7 @@ def animate_avl_beachline(points, bbox=(0, 0, 500, 500)):
     fig, ax = plt.subplots()
     ax.set_xlim(bbox[0], bbox[2])
     ax.set_ylim(bbox[1], bbox[3])
-    ax.set_title("AVL-Based Fortune Algorithm (Parabolas & Bisectors)")
+    ax.set_title("Experimental Fortune sketch (Parabolas & Bisectors)")
 
     xs, ys = zip(*points)
     ax.scatter(xs, ys, color="red", s=50, label="Sites")
