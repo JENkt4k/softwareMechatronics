@@ -11,7 +11,7 @@ An educational Python collection of data structures, algorithms, and computation
 - Backtracking and optimization: N-Queens, Sudoku, and simulated annealing for TSP.
 - String matching: KMP.
 - Computation models: FSM, PDA, Turing machine, lambda calculus, and SKI combinators.
-- Utilities and composites: memoization, bitmask helpers, timing, binary heaps, line sweep, and brute-force raster Voronoi visualization.
+- Utilities and composites: memoization, bitmask helpers, timing, binary heaps, line sweep, bounded Fortune-sweep Voronoi diagrams, and brute-force raster Voronoi visualization.
 
 Implementation does not imply complete validation. See the limitations below and the [status report](docs/diagrams/audit_reports/audit_report.md).
 
@@ -65,7 +65,29 @@ python -m examples.heap_visual_demo
 python -m composites.geometry.fortune_voronoi_demo
 ```
 
-The last command visualizes **brute-force** raster Voronoi regions, independently of the experimental Fortune implementation.
+The last command visualizes **brute-force** raster Voronoi regions. For computed diagram edges and a sweep animation:
+
+```bash
+python -m examples.geometry.fortune_voronoi_demo
+python -m examples.geometry.fortune_voronoi_avl_demo
+```
+
+The animation retains its historical filename but now uses the linked beachline and processes both site and circle events.
+
+### Bounded Voronoi API
+
+```python
+from composites.geometry.fortune_voronoi import fortune_voronoi
+
+edges = fortune_voronoi([(1, 1), (4, 1), (2, 4)], bbox=(0, 0, 5, 5))
+# Each edge is ((x1, y1), (x2, y2)).
+```
+
+The bounding box is `(xmin, ymin, xmax, ymax)`. Results contain the internal cell boundaries clipped to the box, not its perimeter. Duplicate sites are ignored; zero or one unique site produces no internal edges. Sites outside the box are supported. Invalid/nonfinite coordinates and reversed/zero-area bounds raise `ValueError`.
+
+`FortuneVoronoi.compute()` returns the edges and can be called repeatedly. Its `vertices` attribute contains unique clipped edge endpoints. `step()` exposes individual sweep events in normalized coordinates; use `to_world()` for display. `fortune_voronoi_2` remains a compatibility alias.
+
+The sweep discovers neighboring sites using exact parabola formulas and site/circle events, then clips their bisectors against nearest-site half-planes. A linked beachline and explicit clipping give **O(n^2) worst-case time**, rather than the optimized balanced-tree Fortune algorithm's O(n log n). This is an educational floating-point implementation; features below approximately 1e-12 of the total coordinate span may be lost. Coordinate spans that overflow floating point are rejected. See [implementation notes](docs/fortune_voronoi.md).
 
 ## Testing
 
@@ -77,11 +99,9 @@ python -m unittest discover -s tests -v
 
 All maintained unit tests live directly in `tests/`, including AVL invariants and line-sweep tests. Passing tests cover selected cases, not every algorithm or edge case.
 
-## Experimental features and known limitations
+## Known limitations
 
-**Fortune's Voronoi algorithm is an unfinished sketch.** Constructing `FortuneVoronoi` emits a `RuntimeWarning`. It processes site events but returns an empty edge list; circle-event handling, exact beachline breakpoints, edge generation, and bounding-box clipping remain unfinished. Its animations illustrate work in progress and are not computed Voronoi diagrams. `fortune_voronoi_2` is a compatibility alias to the same sketch. Bounding boxes use `(xmin, ymin, xmax, ymax)`.
-
-Other known correctness gaps, deferred from this cleanup:
+Known correctness gaps in other modules:
 
 - The PDA's balanced-parentheses example does not reliably recognize balanced input; epsilon transitions and stack/acceptance behavior need review.
 - Lambda substitution is not capture-avoiding.
@@ -105,4 +125,4 @@ These modules should not be treated as fully validated general-purpose implement
 
 ## License
 
-Earlier documentation stated MIT, but this repository does not currently include a license file. A license file must be added by the project owner before the licensing status is considered resolved.
+Copyright (c) 2026 James Nelson. Released under the [MIT License](LICENSE).

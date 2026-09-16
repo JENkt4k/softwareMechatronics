@@ -75,3 +75,4 @@ dmypy.json
 
 # Project-specific
 *.DS_Store
+.tmp-fortune/

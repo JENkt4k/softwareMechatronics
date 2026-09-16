@@ -1,1 +1,1 @@
-"""Geometry demonstrations, including experimental Fortune sketches."""
+"""Geometry demonstrations, including bounded Voronoi diagrams."""
