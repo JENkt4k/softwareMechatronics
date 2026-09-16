@@ -1,6 +1,6 @@
 # test_line_sweep.py
 import unittest
-from examples.geometry.line_sweep import line_sweep_intersections
+from composites.geometry.line_sweep import line_sweep_intersections
 
 class TestLineSweep(unittest.TestCase):
     def test_intersections(self):
@@ -10,7 +10,7 @@ class TestLineSweep(unittest.TestCase):
             ((2, 5), (2, 0)),
             ((0, 3), (5, 3))
         ]
-        result = line_sweep_intersections(segments)
+        result = {tuple(sorted(pair)) for pair in line_sweep_intersections(segments)}
         self.assertIn((0, 1), result)
         self.assertIn((2, 3), result)
         self.assertTrue(len(result) >= 2)

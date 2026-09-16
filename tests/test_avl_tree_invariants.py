@@ -11,7 +11,7 @@ class TestAVLTree(unittest.TestCase):
     def setUp(self):
         self.tree = AVLTree()
         for key in [10, 20, 30, 40, 50, 25]:
-            self.tree.insert(key)
+            self.tree.insert(key, f"value-{key}")
 
     def test_insertion(self):
         expected_inorder = [10, 20, 25, 30, 40, 50]
@@ -23,9 +23,7 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(self.tree.inorder(), expected_inorder)
 
     def test_search_found(self):
-        node = self.tree.search(25)
-        self.assertIsNotNone(node)
-        self.assertEqual(node.key, 25)
+        self.assertEqual(self.tree.search(25), "value-25")
 
     def test_search_not_found(self):
         node = self.tree.search(99)

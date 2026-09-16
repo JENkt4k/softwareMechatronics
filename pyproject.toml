@@ -6,8 +6,19 @@ build-backend = "setuptools.build_meta"
 name = "SoftwareMechatronics"
 version = "0.1.0"
 description = "Core data structures, algorithms, and computation models."
+readme = "README.md"
 authors = [
-  { name="James Nelson", email="you@example.com" }
+  { name="James Nelson" }
 ]
 dependencies = []
 requires-python = ">=3.8"
+
+[project.optional-dependencies]
+visuals = ["numpy", "matplotlib"]
+reference = ["numpy", "matplotlib", "scipy"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["algorithms*", "composites*", "computation_models*", "data_structures*", "utils*", "examples*"]
+exclude = ["tests*"]
+namespaces = false

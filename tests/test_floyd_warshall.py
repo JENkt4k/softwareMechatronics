@@ -16,7 +16,7 @@ class TestFloydWarshall(unittest.TestCase):
         self.assertEqual(dist['A']['D'], 10)  # A->B->D = 5 + 6 = 11; A->C->D = 9 + 3 = 12, but A->B->C->D = 5 + 2 + 3 = 10
         self.assertEqual(dist['B']['C'], 2)
         self.assertEqual(dist['C']['B'], 2)
-        self.assertEqual(dist['D']['A'], 11)
+        self.assertEqual(dist['D']['A'], 10)  # D -> C -> B -> A: 3 + 2 + 5
 
 if __name__ == "__main__":
     unittest.main()

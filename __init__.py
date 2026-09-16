@@ -4,7 +4,7 @@ Core data structures, algorithms, and computation models.
 """
 
 __version__ = "0.1.0"
-__author__ = "Your Name or Organization"
+__author__ = "James Nelson"
 
 from . import algorithms
 from . import composites
